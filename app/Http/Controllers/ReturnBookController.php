@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bookreturn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illumninate\Suppost\Facades\DB;
 
 class ReturnBookController extends Controller
 {
