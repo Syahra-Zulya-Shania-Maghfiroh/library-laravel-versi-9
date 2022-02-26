@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illumninate\Suppost\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -32,23 +36,29 @@ class StudentController extends Controller
             'address'=>'required'
         ]);
         if($validator->fails()){
-            return Response()->json($validator->error());
+            return Response()->json($validator->errors());
         }
 
         $save=Student::create([
-            'id_grade'=>$request->id,
+            'id_grade'=>$request->id_grade,
             'student_name'=>$request->student_name,
             'born'=>$request->born,
             'gender'=>$request->gender,
             'address'=>$request->address
         ]);
+        // $data_student = Student::where('student_name', '=', $request->student_name)->get();
         if($save){
-            return Response()->json(['status create student success']);
-        }
-        else{
-            return Response()->json(['status create student failed']);
+            return Response() -> json([
+                'message' => 'Succes create student',
+            ]);
+        } else 
+        {
+            return Response() -> json([
+                'message' => 'Failed create nstudent'
+            ]);
         }
     }
+
     public function update($id_student, Request $request){
         $validator=Validator::make($request->all(),
         [

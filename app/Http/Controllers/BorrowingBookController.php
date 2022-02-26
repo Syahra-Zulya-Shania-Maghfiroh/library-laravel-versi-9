@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BorrowingBook;
+use App\Models\BookLoanDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illumninate\Suppost\Facades\DB;
 
 class BorrowingBookController extends Controller
 {
@@ -47,6 +52,25 @@ class BorrowingBookController extends Controller
         }
         else{
             return Response()->json(['status : create borrowing book failed']);
+        }
+    }
+    public function addBook(Request $request, $id_borrow){
+        $validator = Validator::make($request->all(),[
+            'id_book' => 'required',
+            'qty' => 'required'
+        ]);
+        if($validator->fails()){
+            return Response()->json($validator->errors());
+        }
+        $save = BookLoanDetails::create([
+            'id_borrowing_book' => $id_borrow,
+            'id_book' => $request->id_book,
+            'qty' => $request->qty,
+        ]);
+        if($save){
+            return Response()->json(['status success add item']);
+        } else {
+            return Response()->json(['status success add item']);
         }
     }
     public function update($id_borrow, Request $request){

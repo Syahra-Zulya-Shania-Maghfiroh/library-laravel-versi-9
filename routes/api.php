@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,20 +30,23 @@ Route::group(['middleware' => ['jwt.verify']], function(){
         Route::delete("/student/{id_student}", [App\Http\Controllers\StudentController::class, 'destroy']);
         Route::delete("/return/{id_book_return}", [App\Http\Controllers\ReturnBookController::class, 'destroy']);
         Route::delete("/borrow/{id_borrowing_book}", [App\Http\Controllers\BorrowingBookController::class, 'destroy']);
+        
     });
 
-    Route::group(['middleware' => ['api.admin']], function(){
+    Route::group(['middleware' => ['api.superadmin']], function(){
         Route::post("/book", [App\Http\Controllers\BookController::class, 'store']);
-        Route::post("/grade/{id_grade}", [App\Http\Controllers\GradeController::class, 'store']);
-        Route::post("/student/{id_student}", [App\Http\Controllers\StudentController::class, 'store']);
-        Route::post("/return/{id_book_return}", [App\Http\Controllers\ReturnBookController::class, 'store']);
-        Route::post("/borrow/{id_borrowing_book}", [App\Http\Controllers\BorrowingBookController::class, 'store']);
+        Route::post("/grade", [App\Http\Controllers\GradeController::class, 'store']);
+        Route::post("/student", [App\Http\Controllers\StudentController::class, 'store']);
+        Route::post("/return", [App\Http\Controllers\ReturnBookController::class, 'store']);
+        Route::post("/borrow", [App\Http\Controllers\BorrowingBookController::class, 'store']);
 
         Route::put("/book/{id_book}", [App\Http\Controllers\BookController::class, 'update']);
         Route::put("/grade/{id_grade}", [App\Http\Controllers\GradeController::class, 'update']);
         Route::put("/student/{id_student}", [App\Http\Controllers\StudentController::class, 'update']);
         Route::put("/return/{id_book_return}", [App\Http\Controllers\ReturnBookController::class, 'update']);
         Route::put("/borrow/{id_borrowing_book}", [App\Http\Controllers\BorrowingBookController::class, 'update']);
+
+        Route::post('add/{id_borrowing_book}', [App\Http\Controllers\BorrowingBookController::class, 'addBook']);
     });
 
 });
