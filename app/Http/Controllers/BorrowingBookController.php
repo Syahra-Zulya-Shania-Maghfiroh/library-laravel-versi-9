@@ -7,7 +7,7 @@ use App\Models\BookLoanDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illumninate\Suppost\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class BorrowingBookController extends Controller
 {

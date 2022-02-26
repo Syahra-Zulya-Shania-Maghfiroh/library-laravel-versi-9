@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illumninate\Suppost\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class ReturnBookController extends Controller
 {
@@ -20,8 +20,9 @@ class ReturnBookController extends Controller
     public function details($id_book_return){
         if(DB::table('book_return')->where('id_book_return',$id_book_return)->exists()){
             $data_return = DB::table('book_return')
-            ->join('book_return', 'book_return.id_borrowing_book', '=', 'borrowing_book.id_borrowing_book')
-            ->select('book_return.id_book_return', 'book_return.dateOfReturn', 'book_return.fine')
+            ->select('book_return.*')
+            ->join('borrowing_book', 'borrowing_book.id_borrowing_book', '=', 'book_return.id_borrowing_book')
+            // ->select('book_return.id_book_return', 'book_return.dateOfReturn', 'book_return.fine')
             ->where('id_book_return', '=', $id_book_return)
             ->get();
 

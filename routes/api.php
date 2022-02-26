@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookLoanDetails;
 
 
 /*
@@ -51,9 +52,16 @@ Route::group(['middleware' => ['jwt.verify']], function(){
 
 });
 Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::get("/grade/{id_grade}", [App\Http\Controllers\GradeController::class, 'details']);
+    Route::get("/student/{id_student}", [App\Http\Controllers\StudentController::class, 'details']);
+    Route::get("/borrow/{id_borrowing_book}", [App\Http\Controllers\BorrowingBookController::class, 'details']);
+    Route::get("/return/{id_book_return}", [App\Http\Controllers\ReturnBookController::class, 'details']);
+    Route::get("/detail/{id_book_loan_details}", [App\Http\Controllers\BookLoanDetailController::class, 'details']);
+    Route::get("/book/{id_book}", [App\Http\Controllers\BookController::class, 'details']);
+
     Route::get("/book", [App\Http\Controllers\BookController::class, 'show']);
-    Route::get("/grade/{id_grade}", [App\Http\Controllers\GradeController::class, 'show']);
-    Route::get("/student/{id_student}", [App\Http\Controllers\StudentController::class, 'show']);
-    Route::get("/return/{id_book_return}", [App\Http\Controllers\ReturnBookController::class, 'show']);
-    Route::get("/borrow/{id_borrowing_book}", [App\Http\Controllers\BorrowingBookController::class, 'show']);
+    Route::get("/grade", [App\Http\Controllers\GradeController::class, 'show']);
+    Route::get("/student", [App\Http\Controllers\StudentController::class, 'show']);
+    Route::get("/return", [App\Http\Controllers\ReturnBookController::class, 'show']);
+    Route::get("/borrow", [App\Http\Controllers\BorrowingBookController::class, 'show']);
 });

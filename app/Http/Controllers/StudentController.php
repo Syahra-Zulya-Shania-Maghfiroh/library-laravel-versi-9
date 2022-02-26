@@ -6,7 +6,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illumninate\Suppost\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -15,11 +15,12 @@ class StudentController extends Controller
         return Student::join('grade', 'grade.id_grade','student.id_student')->get();
         return Response()->json($data_student);
     }
-    public function details($id){
-        if(Student::where('id_grade', $id)->exists()){
-            $data_student = Student::join('grade', 'grade.id_grade', 'student.id_grade')
-                                            ->where('student.id_grade', '=', $id)
-                                            ->get();
+    public function details($id_student){
+        if(Student::where('id_student', $id_student)->exists()){
+            $data_student = DB::table('student')
+            ->select('student.*')
+            ->where('student.id_student', '=', $id_student)
+            ->get();
             return Response()->json($data_student);
         }
         else {
@@ -54,7 +55,7 @@ class StudentController extends Controller
         } else 
         {
             return Response() -> json([
-                'message' => 'Failed create nstudent'
+                'message' => 'Failed create student'
             ]);
         }
     }
@@ -66,7 +67,7 @@ class StudentController extends Controller
             'born' => 'required',
             'gender' => 'required',
             'address' => 'required',
-            'id' => 'required'
+            'id_grade' => 'required'
         ]);
         if($validator->fails()){
             return Response()->json($validator->errors());
@@ -76,7 +77,7 @@ class StudentController extends Controller
             'born' => $request->born,
             'gender' => $request->gender,
             'address' => $request->address,
-            'id' => $request->id
+            'id_grade' => $request->id_grade
         ]);
         if($update){
             return Response()->json(['status update student success']);

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BookLoanDeatils;
+use App\Models\BookLoanDetails;
 use Illuminate\Http\Request;
 
 class BookLoanDetailController extends Controller
